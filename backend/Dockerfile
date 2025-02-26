@@ -9,13 +9,13 @@ FROM ghcr.io/astral-sh/uv:0.6.3@sha256:8257f3d17fd04794feaf89d83b4ccca3b2eaa5501
 FROM base AS build
 
 # Install uv into the build worker
-COPY --from=uv  /uv /uvx /bin/
+COPY --from=uv /uv /uvx /bin/
 
 # Set up uv to compile bytecode at build time
 ENV UV_COMPILE_BYTECODE=1 
 # uv's package cache is mounted, so copy dependencies instead of linking them
 ENV UV_LINK_MODE=copy
-# Don't download Python with uv, we're getting Python from the offical image
+# Don't download Python with uv, we're getting Python from the official image
 ENV UV_PYTHON_DOWNLOADS=0
 
 WORKDIR /app/
