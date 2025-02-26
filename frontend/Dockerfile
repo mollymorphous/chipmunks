@@ -13,7 +13,7 @@ RUN --mount=type=cache,target=/root/.npm/ \
 
 # Add source files to the image and build distribution
 ADD . /build/
-RUN npm run build
+RUN --network=none npm run build
 
 # Stage 2: Runtime
 FROM nginx:stable-alpine@sha256:cf5dfe2892b7ff58779be78bf9de1a4158c0158160dbf2956a56154e2e9407bd AS runtime
