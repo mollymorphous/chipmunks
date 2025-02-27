@@ -1,55 +1,52 @@
+# Dependencies
+#
 # Official Python image, keep version in sync with .python-version
-FROM docker.io/python:3.13.2-alpine@sha256:8a34ebceda7d48c11d6ec7f322807032f1f152ef121ea7f628cbd72643affd57 AS base
-
-# Distroless uv, pinned here because Dependabot doesn't support COPY --from,
-# see: https://github.com/dependabot/dependabot-core/issues/5103
+FROM docker.io/python:3.13.2-alpine@sha256:8a34ebceda7d48c11d6ec7f322807032f1f152ef121ea7f628cbd72643affd57 AS python
+# Distroless uv image
 FROM ghcr.io/astral-sh/uv:0.6.3@sha256:8257f3d17fd04794feaf89d83b4ccca3b2eaa5501de9399fa53929843c0a5b55 AS uv
 
 # Stage 1: Build
-FROM base AS build
-
-# Install uv into the build worker
-COPY --from=uv /uv /uvx /bin/
-
-# Set up uv to compile bytecode at build time
-ENV UV_COMPILE_BYTECODE=1 
-# uv's package cache is mounted, so copy dependencies instead of linking them
-ENV UV_LINK_MODE=copy
-# Don't download Python with uv, we're getting Python from the official image
-ENV UV_PYTHON_DOWNLOADS=0
-
+FROM python AS build
 WORKDIR /app/
 
+# Install uv into the build worker
+ENV UV_COMPILE_BYTECODE=1 UV_LINK_MODE=copy UV_PYTHON_DOWNLOADS=0
+COPY --from=uv /uv /uvx /bin/
+
 # Install dependencies and cache them in their own layer
-ADD pyproject.toml uv.lock /app/
+COPY pyproject.toml uv.lock /app/
 RUN --mount=type=cache,target=/root/.cache/uv \
     uv sync --frozen --no-install-project --no-dev
 
 # Add source files to the image and run uv sync to compile bytecode
-ADD . /app/
+COPY . /app/
 RUN --mount=type=cache,target=/root/.cache/uv \
     --network=none \
     uv sync --frozen --no-dev
 
-# Stage 2: Runtime
-FROM base AS runtime
+# Stage 2: Runtime Base
+FROM python AS base
+WORKDIR /app/
 
 # Create an unprivileged user app:app
 RUN addgroup -S app && adduser -S app -G app
 
-# Copy app and venv into runtime image
-COPY --from=build /app/ /app/
-
 # Add venv to path
 ENV PATH="/app/.venv/bin:$PATH"
 
-ARG PORT=8080
-EXPOSE $PORT
-ENV GRANIAN_PORT=$PORT GRANIAN_HOST=0.0.0.0 GRANIAN_INTERFACE=asgi
+# Configure Granian and expose port
+EXPOSE 8080
+ENV GRANIAN_PORT=8080 GRANIAN_HOST=0.0.0.0 GRANIAN_INTERFACE=asgi
 
-# Switch to unprivileged user
+# Run Granian as the unprivileged app user
 USER app
 
-WORKDIR /app/
-# Run FastAPI as an entrypoint, so additional CLI args can be appended to this
-ENTRYPOINT ["granian", "app"]
+# Stage 3a: Development
+FROM base AS dev
+COPY --from=build --chown=app:app /app/ /app/
+CMD ["granian", "app", "--reload"]
+
+# Stage 3b: Production 
+FROM base AS prod
+COPY --from=build /app/ /app/
+CMD ["granian", "app"]
