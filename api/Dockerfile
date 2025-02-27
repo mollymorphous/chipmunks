@@ -21,9 +21,8 @@ ENV UV_PYTHON_DOWNLOADS=0
 WORKDIR /app/
 
 # Install dependencies and cache them in their own layer
+ADD pyproject.toml uv.lock /app/
 RUN --mount=type=cache,target=/root/.cache/uv \
-    --mount=type=bind,source=pyproject.toml,target=pyproject.toml \
-    --mount=type=bind,source=uv.lock,target=uv.lock \
     uv sync --frozen --no-install-project --no-dev
 
 # Add source files to the image and run uv sync to compile bytecode
@@ -44,11 +43,13 @@ COPY --from=build /app/ /app/
 # Add venv to path
 ENV PATH="/app/.venv/bin:$PATH"
 
-# FastAPI listens on port 8000 by default
-EXPOSE 8000
+ARG PORT=8080
+EXPOSE $PORT
+ENV GRANIAN_PORT=$PORT GRANIAN_HOST=0.0.0.0 GRANIAN_INTERFACE=asgi
 
 # Switch to unprivileged user
 USER app
 
+WORKDIR /app/
 # Run FastAPI as an entrypoint, so additional CLI args can be appended to this
-ENTRYPOINT ["fastapi", "run"]
+ENTRYPOINT ["granian", "app"]
