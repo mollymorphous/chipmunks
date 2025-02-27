@@ -19,9 +19,11 @@ COPY --chown=app:app . /app/
 
 # Development
 FROM base AS dev
+ENV NODE_ENV=development
 CMD ["npm", "run", "dev", "--", "--host", "--port=8080"]
 
 # Production
 FROM base AS prod
 RUN --network=none npm run build
+ENV NODE_ENV=production
 CMD ["npm", "run", "preview", "--", "--host", "--port=8080"]
