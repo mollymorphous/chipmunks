@@ -1,5 +1,5 @@
 [project]
-name = "chipmunks-backend"
+name = "chipmunks-api"
 version = "0.1.0"
 description = "Cute little inventory manager"
 readme = "../README.md"
