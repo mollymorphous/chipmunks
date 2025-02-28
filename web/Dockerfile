@@ -1,5 +1,5 @@
 # Official Node image, keep version in sync with .node-version
-FROM node:23.8.0-alpine@sha256:b2f1e6d2f9eaf82afc910ec1e3b14f2a252be3f91e661602017974dee1bd9f40 AS base
+FROM docker.io/node:23.8.0-alpine@sha256:b2f1e6d2f9eaf82afc910ec1e3b14f2a252be3f91e661602017974dee1bd9f40 AS base
 WORKDIR /app/
 
 # Default to production for building
