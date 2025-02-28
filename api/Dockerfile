@@ -31,22 +31,22 @@ WORKDIR /app/
 # Create an unprivileged user app:app
 RUN addgroup -S app && adduser -S app -G app
 
-# Add venv to path
 ENV PATH="/app/.venv/bin:$PATH"
 
 # Configure Granian and expose port
 EXPOSE 8080
 ENV GRANIAN_PORT=8080 GRANIAN_HOST=0.0.0.0 GRANIAN_INTERFACE=asgi
 
-# Run Granian as the unprivileged app user
-USER app
+COPY --from=build /app/ /app/
 
 # Stage 3a: Development
 FROM base AS dev
-COPY --from=build --chown=app:app /app/ /app/
+# The app user needs write access for hot reloading
+RUN chown -R app:app /app/app
+USER app
 CMD ["granian", "app", "--reload"]
 
 # Stage 3b: Production 
 FROM base AS prod
-COPY --from=build /app/ /app/
+USER app
 CMD ["granian", "app"]
