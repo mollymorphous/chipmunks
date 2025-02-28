@@ -1,9 +1,9 @@
 from fastapi import FastAPI
 
-api = FastAPI(title="Chipmunks")
+app = FastAPI(title="Chipmunks")
 
 
-@api.get("/")
+@app.get("/")
 def hello():
     """Hello, Chipmunks!"""
     return {"message": "Hello, Chipmunks!"}
