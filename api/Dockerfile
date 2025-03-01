@@ -1,7 +1,7 @@
 # Dependencies
 #
 # Official Python image, keep version in sync with .python-version
-FROM docker.io/python:3.13.2-alpine@sha256:8a34ebceda7d48c11d6ec7f322807032f1f152ef121ea7f628cbd72643affd57 AS python
+FROM docker.io/python:3.13.2-alpine@sha256:323a717dc4a010fee21e3f1aac738ee10bb485de4e7593ce242b36ee48d6b352 AS python
 # Distroless uv image
 FROM ghcr.io/astral-sh/uv:0.6.3@sha256:8257f3d17fd04794feaf89d83b4ccca3b2eaa5501de9399fa53929843c0a5b55 AS uv
 
