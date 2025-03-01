@@ -4,27 +4,35 @@ services:
   proxy:
     image: docker.io/traefik:v3.3.4@sha256:cc11989f418e2cfe5e60fc40c92c1813be847f58eda15eced7d5ac890255ad9e
     restart: always
-    command: --api.insecure=true --providers.docker
+    command: 
+      - --api.insecure=true
+      - --providers.docker
+      - --providers.docker.exposedbydefault=false
     volumes:
-      - ${DOCKER_SOCK:-/var/run/docker.sock}:/var/run/docker.sock
+      # Podman users: set DOCKER_SOCK to Podman socket location
+      - ${DOCKER_SOCK:-/var/run/docker.sock}:/var/run/docker.sock:ro
     ports:
-      - "8080:80"
-      - "8081:8080"
+      - "8000:80"
+      - "8080:8080"
     depends_on:
       - web
       - api
+    privileged: true # Needed for rootless Podman
 
   api:
     build:
       context: ./api/
-      target: dev
+      # Set CHIPMUNKS_TARGET or CHIPMUNKS_API_TARGET to prod for production
+      # build or dev (default) for hot reloading
+      target: ${CHIPMUNKS_API_TARGET:-${CHIPMUNKS_TARGET:-dev}}
     labels:
-      - traefik.http.routers.web.rule=Path(`/api/v1`)
+      - traefik.enable=true
+      - traefik.http.routers.api.rule=PathPrefix(`/api/v1`)
     develop:
       watch:
         - action: sync
-          path: ./api/app/
-          target: /app/app/
+          path: ./api/
+          target: /app/
         - action: rebuild
           path: ./api/pyproject.toml
         - action: rebuild
@@ -33,16 +41,17 @@ services:
   web:
     build:
       context: ./web/
-      target: dev
+      # Set CHIPMUNKS_TARGET or CHIPMUNKS_WEB_TARGET to prod for production
+      # build or dev (default) for hot reloading
+      target: ${CHIPMUNKS_WEB_TARGET:-${CHIPMUNKS_TARGET:-dev}}
     labels:
-      - traefik.http.routers.web.rule=Path(`/`)
-    environment:
-      - __VITE_ADDITIONAL_SERVER_ALLOWED_HOSTS=web
+      - traefik.enable=true
+      - traefik.http.routers.web.rule=PathPrefix(`/`)
     develop:
       watch:
         - action: sync
-          path: ./web/src/
-          target: /app/src/
+          path: ./web/
+          target: /app/
         - action: rebuild
           path: ./web/package.json
         - action: rebuild
