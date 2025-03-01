@@ -4,13 +4,7 @@ api:
     - "api/**"
     - "!api/Dockerfile"
 
-web:
-- changed-files:
-  - all-globs-to-any-file:
-    - "api/**"
-    - "!api/Dockerfile"
-
-docker:
+containers:
 - changed-files:
   - any-glob-to-any-file: 
     - "**/Dockerfile"
@@ -21,3 +15,8 @@ github:
   - all-globs-to-any-file:
     - ".github/**"
 
+web:
+- changed-files:
+  - all-globs-to-any-file:
+    - "web/**"
+    - "!web/Dockerfile"
