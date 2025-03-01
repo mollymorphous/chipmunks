@@ -1,17 +1,13 @@
 api:
   - changed-files:
-      - all-globs-to-any-file: 
-        - "api/*"
-        - "!api/Dockerfile"
+      - any-glob-to-any-file: "api/**"
 
 web:
   - changed-files:
-      - all-globs-to-any-file:
-        - "web/*"
-        - "!web/Dockerfile"
+      - all-globs-to-any-file: "web/**"
 
 docker:
   - changed-files:
     - any-glob-to-any-file: 
-      - "**/Docker"
+      - "**/Dockerfile"
       - "compose.yaml"
