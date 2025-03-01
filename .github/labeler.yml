@@ -6,7 +6,7 @@ api:
 
 web:
   - changed-files:
-      - all-glob-to-any-file:
+      - all-globs-to-any-file:
         - "web/*"
         - "!web/Dockerfile"
 
