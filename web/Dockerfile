@@ -42,5 +42,5 @@ EXPOSE 8080
 ENTRYPOINT [ "npm", "run", "dev", "--", "--host", "--port=8080" ]
 
 # Stage 3b: Production
-FROM docker.io/nginx:1.27.4@sha256:4ff102c5d78d254a6f0da062b3cf39eaf07f01eec0927fd21e219d0af8bc0591 AS prod
+FROM docker.io/nginx:1.27.4@sha256:9d6b58feebd2dbd3c56ab5853333d627cc6e281011cfd6050fa4bcf2072c9496 AS prod
 COPY --from=build /app/dist /usr/share/nginx/html
