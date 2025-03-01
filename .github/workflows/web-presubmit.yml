@@ -6,10 +6,10 @@ name: Web Presubit
 on:
   push:
     branches: [ "main" ]
-    paths: [ "web/**", ".github/workflows/web-ci.yml" ]
+    paths: [ "web/**", ".github/workflows/web-presubmit.yml" ]
   pull_request:
     branches: [ "main" ]
-    paths: [ "web/**", ".github/workflows/web-ci.yml" ]
+    paths: [ "web/**", ".github/workflows/web-presubmit.yml" ]
 
 jobs:
   setup:
@@ -17,7 +17,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Set up Node.js
-        uses: actions/setup-node@v5
+        uses: actions/setup-node@v4
         with:
           node-version-file: "web/.node-version"
           cache: 'npm'
