@@ -14,15 +14,17 @@ on:
 jobs:
   setup:
     runs-on: ubuntu-latest
+    defaults:
+        run:
+          working-directory: "./web"
     steps:
       - uses: actions/checkout@v4
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version-file: "web/.node-version"
+          node-version-file: "./web/.node-version"
           cache: 'npm'
       - name: Install dependencies
-        working-directory: "web"
         run: npm ci
         
   lint:
@@ -30,7 +32,7 @@ jobs:
     needs: setup
     steps:
       - name: Lint
-        working-directory: "web"
+        working-directory: "./web"
         run: npm run lint
 
   build:
@@ -38,5 +40,5 @@ jobs:
     needs: setup
     steps:
       - name: Build
-        working-directory: "web"
+        working-directory: "./web"
         run: npm run build
