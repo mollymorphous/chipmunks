@@ -16,7 +16,7 @@ docker:
     - "**/Dockerfile"
     - "compose.yaml"
 
-github
+github:
 - changed-files:
   - all-globs-to-any-file:
     - ".github/**"
