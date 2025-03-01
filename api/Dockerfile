@@ -31,11 +31,17 @@ WORKDIR /app/
 # Create an unprivileged user app:app
 RUN addgroup -S app && adduser -S app -G app
 
+# Add virtual environment to path
 ENV PATH="/app/.venv/bin:$PATH"
 
-# Configure Granian and expose port
-EXPOSE 8080
-ENV GRANIAN_PORT=8080 GRANIAN_HOST=0.0.0.0 GRANIAN_INTERFACE=asgi
+# Configure Granian and expose service
+ARG CHIPMUNKS_API_PORT=8080
+EXPOSE ${CHIPMUNKS_API_PORT}
+ENV GRANIAN_PORT=${CHIPMUNKS_API_PORT} \
+    GRANIAN_HOST=0.0.0.0 \
+    GRANIAN_INTERFACE=asgi \
+    GRANIAN_URL_PATH_PREFIX=/api/v1
+ENTRYPOINT [ "granian", "app" ]
 
 COPY --from=build /app/ /app/
 
@@ -44,9 +50,8 @@ FROM base AS dev
 # The app user needs write access for hot reloading
 RUN chown -R app:app /app/app
 USER app
-CMD ["granian", "app", "--reload"]
+CMD [ "--reload"]
 
 # Stage 3b: Production 
 FROM base AS prod
 USER app
-CMD ["granian", "app"]
