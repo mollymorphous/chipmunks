@@ -1,24 +1,6 @@
 name: chipmunks
 
 services:
-  proxy:
-    image: docker.io/traefik:v3.3.4@sha256:cc11989f418e2cfe5e60fc40c92c1813be847f58eda15eced7d5ac890255ad9e
-    restart: always
-    command: 
-      - --api.insecure=true
-      - --providers.docker
-      - --providers.docker.exposedbydefault=false
-    volumes:
-      # Podman users: set DOCKER_SOCK to Podman socket location
-      - ${DOCKER_SOCK:-/var/run/docker.sock}:/var/run/docker.sock:ro
-    ports:
-      - "8000:80"
-      - "8080:8080"
-    depends_on:
-      - web
-      - api
-    privileged: true # Needed for rootless Podman
-
   api:
     build:
       context: ./api/
@@ -38,6 +20,24 @@ services:
         - action: rebuild
           path: ./api/uv.lock
 
+  proxy:
+    image: docker.io/traefik:v3.3.4@sha256:cc11989f418e2cfe5e60fc40c92c1813be847f58eda15eced7d5ac890255ad9e
+    restart: always
+    command:
+      - --api.insecure=true
+      - --providers.docker
+      - --providers.docker.exposedbydefault=false
+    privileged: true # Needed for rootless Podman
+    volumes:
+      # Podman users: set DOCKER_SOCK to Podman socket location
+      - ${DOCKER_SOCK:-/var/run/docker.sock}:/var/run/docker.sock:ro
+    ports:
+      - "8000:80"
+      - "8080:8080"
+    depends_on:
+      - web
+      - api
+
   web:
     build:
       context: ./web/
@@ -56,4 +56,3 @@ services:
           path: ./web/package.json
         - action: rebuild
           path: ./web/package-lock.json
-  
