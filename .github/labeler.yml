@@ -1,6 +1,23 @@
-api: "api/**"
-web: "web/**"
-docker: 
-  - "**/Dockerfile"
-  - "compose.yaml"
-github: ".github/**"
+api:
+- changed-files:
+  - all-globs-to-any-file: 
+    - "api/**"
+    - "!api/Dockerfile"
+
+web:
+- changed-files:
+  - all-globs-to-any-file:
+    - "api/**"
+    - "!api/Dockerfile"
+
+docker:
+- changed-files:
+  - any-glob-to-any-file: 
+    - "**/Dockerfile"
+    - "compose.yaml"
+
+github
+- changed-files:
+  - all-globs-to-any-file:
+    - ".github/**"
+
