@@ -19,6 +19,17 @@ services:
           path: ./api/pyproject.toml
         - action: rebuild
           path: ./api/uv.lock
+    depends_on:
+      - db
+
+  db:
+    image: docker.io/postgres:17.4-alpine@sha256:7062a2109c4b51f3c792c7ea01e83ed12ef9a980886e3b3d380a7d2e5f6ce3f5
+    restart: always
+    environment:
+      POSTGRES_USER: chipmunks
+      POSTGRES_PASSWORD: password
+    volumes:
+      - db-data:/var/lib/postgresql/data:rw
 
   proxy:
     image: docker.io/traefik:v3.3.4@sha256:cc11989f418e2cfe5e60fc40c92c1813be847f58eda15eced7d5ac890255ad9e
@@ -32,8 +43,8 @@ services:
       # Podman users: set DOCKER_SOCK to Podman socket location
       - ${DOCKER_SOCK:-/var/run/docker.sock}:/var/run/docker.sock:ro
     ports:
-      - "8000:80"
-      - "8080:8080"
+      - 8000:80
+      - 8080:8080
     depends_on:
       - web
       - api
@@ -56,3 +67,6 @@ services:
           path: ./web/package.json
         - action: rebuild
           path: ./web/package-lock.json
+
+volumes:
+  db-data: # For Postgres
