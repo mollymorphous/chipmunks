@@ -10,11 +10,15 @@ authors = [
 ]
 requires-python = ">=3.13"
 dependencies = [
-    "fastapi>=0.115.8",
+    "asyncpg>=0.30.0",
+    "fastapi>=0.115.10",
     "granian[reload]>=1.7.6",
+    "sqlalchemy[asyncio]>=2.0.38",
+    "sqlmodel>=0.0.23",
 ]
 
 [dependency-groups]
 dev = [
-    "ruff>=0.9.7",
+    "aiosqlite>=0.21.0",
+    "ruff>=0.9.9",
 ]
