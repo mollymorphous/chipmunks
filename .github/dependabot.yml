@@ -8,12 +8,22 @@ updates:
     schedule:
       interval: weekly
       day: friday
+    groups:
+      minor-updates:
+        update-types:
+          - minor
+          - patch
 
   - package-ecosystem: npm
     directory: /web/
     schedule:
       interval: weekly
       day: friday
+    groups:
+      minor-updates:
+        update-types:
+          - minor
+          - patch
 
   - package-ecosystem: docker
     directories:
@@ -22,8 +32,21 @@ updates:
     schedule:
       interval: weekly
       day: friday
+    groups:
+      patch-updates:
+        update-types:
+          - patch
   
   - package-ecosystem: docker-compose
     directory: /
     schedule:
       interval: weekly
+      day: friday
+    groups:
+      patch-updates:
+        update-types:
+          - patch
+  
+  - package-ecosystem: github-actions
+    schedule:
+      interval: monthly
