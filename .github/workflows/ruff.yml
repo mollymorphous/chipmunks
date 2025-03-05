@@ -1,4 +1,4 @@
-name: Ruff
+name: ruff
 
 on:
   push:
@@ -14,6 +14,8 @@ jobs:
     permissions:
       contents: read
     steps:
+      - name: Checkout
+        uses: actions/checkout@v4
       - name: Lint
         uses: astral-sh/ruff-action@v3
         with:

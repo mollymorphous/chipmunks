@@ -5,6 +5,7 @@
 # file with configuration.  For more information, see:
 # https://github.com/actions/labeler
 
+name: labeler
 on: [pull_request_target]
 
 jobs:
@@ -14,6 +15,6 @@ jobs:
       contents: read
       pull-requests: write
     steps:
-    - uses: actions/labeler@v5
-      with:
-        repo-token: "${{ secrets.GITHUB_TOKEN }}"
+      - uses: actions/labeler@v5
+        with:
+          repo-token: "${{ secrets.GITHUB_TOKEN }}"
