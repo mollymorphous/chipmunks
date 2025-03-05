@@ -47,11 +47,8 @@ COPY --from=build /app/ /app/
 
 # Stage 3a: Development
 FROM base AS dev
-# The app user needs write access for hot reloading
-RUN chown -R app:app /app/app
 COPY config.dev.toml /app/config.toml
 USER app
-CMD [ "--reload"]
 
 # Stage 3b: Production 
 FROM base AS prod

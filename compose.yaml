@@ -30,7 +30,7 @@ services:
       - traefik.http.routers.api.rule=PathPrefix(`/api/v1`)
     develop:
       watch:
-        - action: sync
+        - action: sync+restart
           path: ./api/app/
           target: /app/app/
         - action: sync+restart
