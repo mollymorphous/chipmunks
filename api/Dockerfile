@@ -19,7 +19,7 @@ RUN --mount=type=cache,target=/root/.cache/uv \
     uv sync --frozen --no-install-project --no-dev
 
 # Add source files to the image and run uv sync to compile bytecode
-COPY . /app/
+COPY --exclude=config.*.toml . /app/
 RUN --mount=type=cache,target=/root/.cache/uv \
     --network=none \
     uv sync --frozen --no-dev
@@ -49,9 +49,11 @@ COPY --from=build /app/ /app/
 FROM base AS dev
 # The app user needs write access for hot reloading
 RUN chown -R app:app /app/app
+COPY config.dev.toml /app/config.toml
 USER app
 CMD [ "--reload"]
 
 # Stage 3b: Production 
 FROM base AS prod
+COPY config.prod.toml /app/config.toml
 USER app

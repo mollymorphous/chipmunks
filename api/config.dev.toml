@@ -1,0 +1,2 @@
+log.level = "INFO"
+debug.stack_traces = true

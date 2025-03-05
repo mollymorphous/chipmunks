@@ -3,7 +3,12 @@ from __future__ import annotations
 from enum import StrEnum, auto
 
 from pydantic import BaseModel, Field
-from pydantic_settings import BaseSettings, SettingsConfigDict
+from pydantic_settings import (
+    BaseSettings,
+    PydanticBaseSettingsSource,
+    SettingsConfigDict,
+    TomlConfigSettingsSource,
+)
 
 
 class LogLevel(StrEnum):
@@ -30,12 +35,32 @@ class DebugConfig(BaseModel):
 
 
 class Config(BaseSettings):
-    model_config = SettingsConfigDict(
-        env_prefix="CHIPMUNKS_", env_nested_delimiter="_", env_nested_max_split=1
-    )
-
     log: LogConfig = Field(LogConfig())
     debug: DebugConfig = Field(DebugConfig())
+
+    model_config = SettingsConfigDict(
+        env_prefix="CHIPMUNKS_",
+        env_nested_delimiter="_",
+        env_nested_max_split=1,
+        toml_file="config.toml",
+    )
+
+    @classmethod
+    def settings_customise_sources(
+        cls,
+        settings_cls: type[BaseSettings],
+        init_settings: PydanticBaseSettingsSource,
+        env_settings: PydanticBaseSettingsSource,
+        dotenv_settings: PydanticBaseSettingsSource,
+        file_secret_settings: PydanticBaseSettingsSource,
+    ) -> tuple[PydanticBaseSettingsSource, ...]:
+        return (
+            init_settings,
+            TomlConfigSettingsSource(settings_cls),
+            env_settings,
+            dotenv_settings,
+            file_secret_settings,
+        )
 
 
 if __name__ == "__main__":

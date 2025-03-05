@@ -4,7 +4,7 @@ services:
   proxy:
     image: docker.io/traefik:v3.3.4@sha256:cc11989f418e2cfe5e60fc40c92c1813be847f58eda15eced7d5ac890255ad9e
     restart: always
-    command: 
+    command:
       - --api.insecure=true
       - --providers.docker
       - --providers.docker.exposedbydefault=false
@@ -31,8 +31,11 @@ services:
     develop:
       watch:
         - action: sync
-          path: ./api/
-          target: /app/
+          path: ./api/app/
+          target: /app/app/
+        - action: sync+restart
+          path: ./api/config.${CHIPMUNKS_API_TARGET:-${CHIPMUNKS_TARGET:-dev}}.toml
+          target: /app/config.toml
         - action: rebuild
           path: ./api/pyproject.toml
         - action: rebuild
@@ -56,4 +59,3 @@ services:
           path: ./web/package.json
         - action: rebuild
           path: ./web/package-lock.json
-  
