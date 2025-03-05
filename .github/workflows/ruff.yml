@@ -1,0 +1,20 @@
+on:
+  push:
+    branches: [main]
+    paths: ["**.py"]
+  pull_request:
+    branches: [main]
+    paths: ["**.py", ".github/workflows/ruff.yml"]
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Lint
+        uses: astral-sh/ruff-action@v3
+        with:
+          version-file: api/pyproject.toml
+      - name: Format
+        run: format --check
