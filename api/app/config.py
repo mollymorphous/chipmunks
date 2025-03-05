@@ -28,6 +28,7 @@ class LogLevel(StrEnum):
 
 class LogConfig(BaseModel):
     level: LogLevel = Field(LogLevel.WARNING)
+    format: str = Field("[{levelname}] {message} ({filename}:{lineno})")
 
 
 class DebugConfig(BaseModel):
