@@ -1,3 +1,5 @@
+name: Ruff
+
 on:
   push:
     branches: [main]
@@ -17,4 +19,4 @@ jobs:
         with:
           version-file: api/pyproject.toml
       - name: Format
-        run: format --check
+        run: ruff format --check
