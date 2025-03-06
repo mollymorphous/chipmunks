@@ -2,13 +2,13 @@ import logging
 
 from fastapi import FastAPI
 
-from .config import Config
+from .settings import Settings
 
 # Set up app instance
-config = Config()
-logging.basicConfig(level=config.log.level, format=config.log.format, style="{")
+settings = Settings()
+logging.basicConfig(level=settings.log.level, format=settings.log.format, style="{")
 app = FastAPI(
-    title="Chipmunks", debug=config.debug.stack_traces, version=config.build.version
+    title="Chipmunks", debug=settings.debug.stack_traces, version=settings.build.version
 )
 
 
