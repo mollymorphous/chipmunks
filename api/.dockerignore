@@ -4,3 +4,5 @@
 **/*.pyo
 **/*.pyd
 .ruff_cache
+
+config.toml

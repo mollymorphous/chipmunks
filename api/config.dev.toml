@@ -1,0 +1,5 @@
+[debug]
+stack_traces = true
+
+[log]
+level = "INFO"

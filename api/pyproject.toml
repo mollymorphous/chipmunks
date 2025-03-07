@@ -11,10 +11,12 @@ authors = [
 requires-python = ">=3.13"
 dependencies = [
     "asyncpg>=0.30.0",
-    "fastapi>=0.115.10",
-    "granian[reload]>=1.7.6",
+    "fastapi>=0.115.11",
+    "granian>=1.7.6",
+    "pydantic>=2.10.6",
+    "pydantic-settings>=2.8.1",
     "sqlalchemy[asyncio]>=2.0.38",
-    "sqlmodel>=0.0.23",
+    "sqlmodel>=0.0.24",
 ]
 
 [dependency-groups]
