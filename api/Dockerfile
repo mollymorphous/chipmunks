@@ -52,5 +52,4 @@ USER app
 
 # Stage 3b: Production 
 FROM base AS prod
-COPY config.prod.toml /app/config.toml
 USER app

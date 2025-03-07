@@ -34,7 +34,7 @@ services:
           path: ./api/app/
           target: /app/app/
         - action: sync+restart
-          path: ./api/config.${CHIPMUNKS_API_TARGET:-${CHIPMUNKS_TARGET:-dev}}.toml
+          path: ./api/config.dev.toml
           target: /app/config.toml
         - action: rebuild
           path: ./api/pyproject.toml
