@@ -3,4 +3,4 @@
 **/*.py[cod]
 .ruff_cache
 
-settings.toml
+config.toml

@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from enum import StrEnum, auto
 from pathlib import Path
 
@@ -24,14 +26,14 @@ def load_pyproject_version() -> str | None:
     return None
 
 
-class BuildSettings(BaseModel):
-    """Information about where this deployment was built from."""
+class BuildConfig(BaseModel):
+    """Config storing info on this build"""
 
     version: str = Field(default_factory=load_pyproject_version)
 
 
-class DebugSettings(BaseModel):
-    """Debugging settings for use in development."""
+class DebugConfig(BaseModel):
+    """App debugging config"""
 
     stack_traces: bool = Field(False)
     """Expose stack traces to the client for exceptions resulting in 500 errors."""
@@ -52,28 +54,28 @@ class LogLevel(StrEnum):
     DEBUG = auto()
 
 
-class LogSettings(BaseModel):
-    """Settings for the logging module, including log level and a format string."""
+class LogConfig(BaseModel):
+    """Config for the logging module, including log level and format"""
 
     level: LogLevel = Field(LogLevel.WARNING)
     format: str = Field("[{levelname}] {message} ({filename}:{lineno})")
 
 
-class Settings(BaseSettings):
+class Config(BaseSettings):
     """
-    App-wide settings, loaded from `settings.toml` in the working directory, environment variables,
+    App-wide config, loaded from `config.toml` in the working directory, environment variables,
     `.env` files, and Docker secrets.
     """
 
-    build: BuildSettings = Field(default_factory=BuildSettings)
-    debug: DebugSettings = Field(DebugSettings())
-    log: LogSettings = Field(LogSettings())
+    build: BuildConfig = Field(default_factory=BuildConfig)
+    debug: DebugConfig = Field(DebugConfig())
+    log: LogConfig = Field(LogConfig())
 
     model_config = SettingsConfigDict(
         env_prefix="CHIPMUNKS_",
         env_nested_delimiter="_",
         env_nested_max_split=1,
-        toml_file="settings.toml",
+        toml_file="config.toml",
     )
 
     @classmethod
@@ -94,6 +96,5 @@ class Settings(BaseSettings):
         )
 
 
-# For development and debugging, you can execute `python app/settings.py` to see resolved settings
 if __name__ == "__main__":
-    print(Settings().model_dump_json(indent=2))
+    print(Config().model_dump())

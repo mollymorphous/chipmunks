@@ -47,10 +47,10 @@ COPY --from=build /app/ /app/
 
 # Stage 3a: Development
 FROM base AS dev
-COPY settings.dev.toml /app/settings.toml
+COPY config.dev.toml /app/config.toml
 USER app
 
 # Stage 3b: Production 
 FROM base AS prod
-COPY settings.prod.toml /app/settings.toml
+COPY config.prod.toml /app/config.toml
 USER app
