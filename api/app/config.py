@@ -96,5 +96,6 @@ class Config(BaseSettings):
         )
 
 
+# For debugging, execute this file to dump the resolved config as JSON
 if __name__ == "__main__":
-    print(Config().model_dump())
+    print(Config().model_dump_json(indent=2))
