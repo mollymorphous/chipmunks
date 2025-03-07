@@ -1,0 +1,25 @@
+name: ruff
+
+on:
+  push:
+    branches: [main]
+    paths: ["**.py"]
+  pull_request:
+    branches: [main]
+    paths: ["**.py", ".github/workflows/ruff.yml"]
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Lint
+        uses: astral-sh/ruff-action@v3
+        with:
+          args: check
+          version-file: api/pyproject.toml
+      - name: Format
+        run: ruff format --check
