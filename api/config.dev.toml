@@ -1,2 +1,5 @@
-log.level = "INFO"
-debug.stack_traces = true
+[debug]
+stack_traces = true
+
+[log]
+level = "INFO"
