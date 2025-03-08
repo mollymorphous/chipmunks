@@ -2,7 +2,7 @@
 
 version: 2
 enable-beta-ecosystems: true
-updates: 
+updates:
   - package-ecosystem: uv
     directory: /api/
     schedule:
@@ -36,7 +36,7 @@ updates:
       patch-updates:
         update-types:
           - patch
-  
+
   - package-ecosystem: docker-compose
     directory: /
     schedule:
@@ -46,7 +46,8 @@ updates:
       patch-updates:
         update-types:
           - patch
-  
+
   - package-ecosystem: github-actions
+    directory: /
     schedule:
       interval: monthly
