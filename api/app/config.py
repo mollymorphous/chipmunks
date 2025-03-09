@@ -1,10 +1,8 @@
-from __future__ import annotations
-
-from enum import StrEnum, auto
 from pathlib import Path
+from typing import Annotated
 
 import tomllib
-from pydantic import BaseModel, Field
+from pydantic import AnyUrl, BaseModel, Field, SecretStr, StringConstraints
 from pydantic_settings import (
     BaseSettings,
     PydanticBaseSettingsSource,
@@ -27,49 +25,63 @@ def load_pyproject_version() -> str | None:
 
 
 class BuildConfig(BaseModel):
-    """Config storing info on this build"""
-
     version: str = Field(default_factory=load_pyproject_version)
+    git_commit: str | None = Field(
+        default=None, min_length=40, max_length=40, pattern=r"^[0-9a-f]{40}$"
+    )
+
+
+class DatabaseConfig(BaseModel):
+    url: AnyUrl
+    password: SecretStr | None = Field(default=None)
 
 
 class DebugConfig(BaseModel):
-    """App debugging config"""
+    stack_traces: bool = Field(default=False)
+    """Expose stack traces to the client: `FastAPI(debug=config.debug.stack_traces)`"""
 
-    stack_traces: bool = Field(False)
-    """Expose stack traces to the client for exceptions resulting in 500 errors."""
-
-
-class LogLevel(StrEnum):
-    """Log levels matched to the logging module's standard log level names"""
-
-    @staticmethod
-    def _generate_next_value_(name, *args):
-        """Keep names uppercase to match what the logging module expects"""
-        return name.upper()
-
-    CRITICAL = auto()
-    ERROR = auto()
-    WARNING = auto()
-    INFO = auto()
-    DEBUG = auto()
+    echo_sql: bool = Field(default=False)
+    """Log SQL to the console: `sqlalchemy.create_engine(echo=config.debug.echo_sql)`"""
 
 
-class LogConfig(BaseModel):
-    """Config for the logging module, including log level and format"""
+class LoggingConfig(BaseModel):
+    level: Annotated[str, StringConstraints(to_upper=True)] = Field(default="INFO")
+    format: str = Field(default="[%(levelname)s] %(message)s")
 
-    level: LogLevel = Field(LogLevel.WARNING)
-    format: str = Field("[{levelname}] {message} ({filename}:{lineno})")
+    formatters: dict = Field(default={})
+    filters: dict = Field(default={})
+    handlers: dict = Field(default={})
+    loggers: dict = Field(default={})
+    root: dict = Field(default={})
+
+    def config_dict(self) -> dict:
+        return {
+            "version": 1,
+            "formatters": {"default": {"format": self.format}} | self.formatters,
+            "filters": self.filters,
+            "handlers": {
+                "default": {
+                    "class": "logging.StreamHandler",
+                    "formatter": "default",
+                    "stream": "ext://sys.stderr",
+                }
+            }
+            | self.handlers,
+            "loggers": self.loggers,
+            "root": {"handlers": ["default"], "level": self.level} | self.root,
+        }
 
 
 class Config(BaseSettings):
     """
-    App-wide config, loaded from `config.toml` in the working directory, environment variables,
-    `.env` files, and Docker secrets.
+    App-wide config, loaded from `config.toml` in the working directory, environment
+    variables, `.env` files, and Docker secrets.
     """
 
     build: BuildConfig = Field(default_factory=BuildConfig)
-    debug: DebugConfig = Field(DebugConfig())
-    log: LogConfig = Field(LogConfig())
+    debug: DebugConfig = Field(default=DebugConfig())
+    database: DatabaseConfig | None = Field(default=None)
+    logging: LoggingConfig = Field(default=LoggingConfig())
 
     model_config = SettingsConfigDict(
         env_prefix="CHIPMUNKS_",
