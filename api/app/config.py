@@ -60,15 +60,22 @@ class LoggingConfig(BaseModel):
             "formatters": {"default": {"format": self.format}} | self.formatters,
             "filters": self.filters,
             "handlers": {
-                "default": {
+                "console": {
                     "class": "logging.StreamHandler",
                     "formatter": "default",
-                    "stream": "ext://sys.stderr",
+                    "stream": "ext://sys.stdout",
                 }
             }
             | self.handlers,
-            "loggers": self.loggers,
-            "root": {"handlers": ["default"], "level": self.level} | self.root,
+            "loggers": {
+                "app": {
+                    "level": self.level,
+                    "handlers": ["console"],
+                    "propagate": False,
+                }
+            }
+            | self.loggers,
+            "root": {"handlers": ["console"]} | self.root,
         }
 
 
