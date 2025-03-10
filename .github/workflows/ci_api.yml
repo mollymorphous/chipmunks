@@ -5,10 +5,10 @@ name: "API"
 on:
   push:
     branches: [main]
-    paths: ["api/", ".github/workflows/ci_api.yml"]
+    paths: ["api/**", ".github/workflows/ci_api.yml"]
   pull_request:
     branches: [main]
-    paths: ["api/", ".github/workflows/ci_api.yml"]
+    paths: ["api/**", ".github/workflows/ci_api.yml"]
 
 jobs:
   ruff:
