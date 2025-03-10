@@ -21,7 +21,7 @@ async def lifespan(app: FastAPI):
     else:
         try:
             url = config.database.sqlalchemy_url()
-            engine = create_async_engine(url)
+            engine = create_async_engine(url, echo=config.debug.echo_sql)
             logger.debug("Configured database at '%s'", url)
         except Exception as exception:
             logger.critical(exception)
