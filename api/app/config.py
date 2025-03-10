@@ -9,6 +9,7 @@ from pydantic_settings import (
     SettingsConfigDict,
     TomlConfigSettingsSource,
 )
+from sqlalchemy import URL, make_url
 
 
 def load_pyproject_version() -> str | None:
@@ -34,6 +35,22 @@ class BuildConfig(BaseModel):
 class DatabaseConfig(BaseModel):
     url: AnyUrl
     password: SecretStr | None = Field(default=None)
+
+    def sqlalchemy_url(self) -> URL:
+        """Render as an SQLAlchemy URL with password and async driver"""
+
+        url = make_url(str(self.url))
+        changes = {}
+
+        if url.drivername == "sqlite":
+            changes["drivername"] = "sqlite+aiosqlite"
+        elif url.drivername == "postgres" or url.drivername == "postgresql":
+            changes["drivername"] = "postgresql+asyncpg"
+
+        if self.password is not None:
+            changes["password"] = self.password.get_secret_value()
+
+        return url.set(**changes)
 
 
 class DebugConfig(BaseModel):
