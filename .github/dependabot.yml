@@ -8,6 +8,7 @@ updates:
     schedule:
       interval: weekly
       day: friday
+    versioning-strategy: increase
     groups:
       minor-updates:
         update-types:
