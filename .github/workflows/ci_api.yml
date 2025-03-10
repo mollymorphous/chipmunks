@@ -1,0 +1,33 @@
+# Continuous Integration for the API module
+
+name: "API"
+
+on:
+  push:
+    branches: [main]
+    paths: ["api/**", ".github/workflows/ci_api.yml"]
+  pull_request:
+    branches: [main]
+    paths: ["api/**", ".github/workflows/ci_api.yml"]
+
+jobs:
+  ruff:
+    name: Ruff
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Lint
+        uses: astral-sh/ruff-action@v3
+        with:
+          src: ./api
+          args: check
+          version-file: ./api/pyproject.toml
+      - name: Format
+        uses: astral-sh/ruff-action@v3
+        with:
+          src: ./api
+          args: format --check
+          version-file: ./api/pyproject.toml
