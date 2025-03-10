@@ -4,6 +4,9 @@ version = "0.1.0"
 description = "Cute little inventory manager"
 readme = "../README.md"
 license = "MIT"
+classifiers = [
+    "Private :: Do Not Upload"
+]
 authors = [
     "Molly Rose",
     "Jess Muskin-Pierret",
