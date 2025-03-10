@@ -41,7 +41,7 @@ ENV GRANIAN_PORT=${CHIPMUNKS_API_PORT} \
     GRANIAN_HOST=0.0.0.0 \
     GRANIAN_INTERFACE=asgi \
     GRANIAN_URL_PATH_PREFIX=/api/v1
-ENTRYPOINT [ "granian", "app" ]
+ENTRYPOINT [ "granian", "app.main" ]
 
 COPY --from=build /app/ /app/
 
