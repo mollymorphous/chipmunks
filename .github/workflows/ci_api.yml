@@ -1,6 +1,6 @@
 # Continuous Integration for the API module
 
-name: "API: CI"
+name: "API"
 
 on:
   push:

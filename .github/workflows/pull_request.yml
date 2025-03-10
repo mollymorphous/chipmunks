@@ -1,6 +1,6 @@
 # Pull Request triage and management
 
-name: Pull Request
+name: PR
 on: [pull_request_target]
 
 jobs:
