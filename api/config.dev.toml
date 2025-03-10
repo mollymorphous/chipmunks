@@ -1,5 +1,6 @@
 [debug]
 stack_traces = true
+echo_sql = false
 
-[log]
+[logging]
 level = "INFO"
