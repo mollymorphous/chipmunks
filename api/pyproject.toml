@@ -24,10 +24,22 @@ dependencies = [
 
 [dependency-groups]
 dev = [
-    "aiosqlite==0.21.0",
     "ruff==0.9.10",
-    {include-group = "mypy"}
+    {include-group = "mypy"},
+    {include-group = "test"},
 ]
 mypy = [
     "mypy[faster-cache]==1.15.0",
+]
+test = [
+    "aiosqlite==0.21.0",
+    "httpx==0.28.1",
+    "pytest==8.3.5",
+    "pytest-randomly==3.16.0",
+]
+
+[tool.pytest.ini_options]
+addopts = "-q -ra"
+testpaths = [
+    "tests",
 ]
