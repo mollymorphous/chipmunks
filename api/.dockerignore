@@ -3,6 +3,6 @@
 **/*.pyc
 **/*.pyo
 **/*.pyd
-.ruff_cache
+.*_cache
 
 config.toml

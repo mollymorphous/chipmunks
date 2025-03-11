@@ -26,4 +26,8 @@ dependencies = [
 dev = [
     "aiosqlite==0.21.0",
     "ruff==0.9.10",
+    {include-group = "mypy"}
+]
+mypy = [
+    "mypy[faster-cache]==1.15.0",
 ]

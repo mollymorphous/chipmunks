@@ -12,7 +12,7 @@ from pydantic_settings import (
 from sqlalchemy import URL, make_url
 
 
-def load_pyproject_version() -> str | None:
+def load_pyproject_version() -> str:
     """Load version number from pyproject.toml"""
 
     path = Path(__file__).parents[1] / "pyproject.toml"
@@ -22,7 +22,7 @@ def load_pyproject_version() -> str | None:
             if project is not None:
                 return project["version"]
 
-    return None
+    return "0.0.0+unknown"
 
 
 class BuildConfig(BaseModel):
@@ -40,17 +40,18 @@ class DatabaseConfig(BaseModel):
         """Render as an SQLAlchemy URL with password and async driver"""
 
         url = make_url(str(self.url))
-        changes = {}
+        password = None
+        driver = url.drivername
 
-        if url.drivername == "sqlite":
-            changes["drivername"] = "sqlite+aiosqlite"
+        if driver == "sqlite":
+            driver = "sqlite+aiosqlite"
         elif url.drivername == "postgres" or url.drivername == "postgresql":
-            changes["drivername"] = "postgresql+asyncpg"
+            driver = "postgresql+asyncpg"
 
         if self.password is not None:
-            changes["password"] = self.password.get_secret_value()
+            password = self.password.get_secret_value()
 
-        return url.set(**changes)
+        return url.set(drivername=driver, password=password)
 
 
 class DebugConfig(BaseModel):
