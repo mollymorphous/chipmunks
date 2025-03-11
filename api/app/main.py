@@ -1,5 +1,6 @@
-import logging
+import logging.config
 from contextlib import asynccontextmanager
+from logging import getLogger
 
 from fastapi import FastAPI
 from sqlalchemy.ext.asyncio import create_async_engine
@@ -7,7 +8,7 @@ from sqlalchemy.ext.asyncio import create_async_engine
 from .config import Config
 
 config = Config()
-logger = logging.getLogger(__name__)
+logger = getLogger(__name__)
 logging.config.dictConfig(config.logging.config_dict())
 
 
