@@ -22,7 +22,7 @@ def load_pyproject_version() -> str:
             if project is not None:
                 return project["version"]
 
-    return "unknown"
+    return "0.0.0+unknown"
 
 
 class BuildConfig(BaseModel):
