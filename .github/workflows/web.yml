@@ -23,6 +23,9 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version-file: "./web/.node-version"
+      - name: Install dependencies
+        working-directory: ./web/
+        run: npm ci
       - name: Run next lint
         working-directory: ./web/
         run: npm run lint
@@ -39,6 +42,9 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version-file: "./web/.node-version"
+      - name: Install dependencies
+        working-directory: ./web/
+        run: npm ci
       - name: Run next build
         working-directory: ./web/
         run: npx next build --no-lint
@@ -57,4 +63,4 @@ jobs:
           node-version-file: "./web/.node-version"
       - name: Prettier check
         working-directory: ./web/
-        run: npx prettier -c
+        run: npx --package prettier-plugin-tailwindcss prettier -c .
