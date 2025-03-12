@@ -1,0 +1,60 @@
+# Continuous Integration for the Web module
+
+name: "Web"
+
+on:
+  push:
+    branches: [main]
+    paths: ["api/**", ".github/workflows/web.yml"]
+  pull_request:
+    branches: [main]
+    paths: ["api/**", ".github/workflows/web.yml"]
+
+jobs:
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: "./web/.node-version"
+      - name: Run next lint
+        working-directory: ./web/
+        run: npm run lint
+
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: "./web/.node-version"
+      - name: Run next build
+        working-directory: ./web/
+        run: npx next build --no-lint
+
+  prettier:
+    name: Prettier
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: "./web/.node-version"
+      - name: Prettier check
+        working-directory: ./web/
+        run: npx prettier -c
