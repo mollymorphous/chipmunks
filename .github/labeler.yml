@@ -4,16 +4,16 @@ api:
           - "api/**"
           - "!api/Dockerfile"
 
-ci:
-  - changed-files:
-      - all-globs-to-any-file:
-          - ".github/**"
-
 docker:
   - changed-files:
       - any-glob-to-any-file:
           - "**/Dockerfile"
           - "compose.yaml"
+
+github:
+  - changed-files:
+      - all-globs-to-any-file:
+          - ".github/**"
 
 web:
   - changed-files:
