@@ -35,9 +35,8 @@ RUN mkdir .next && chown app:app .next
 
 # Run the development server as the unprivileged app user
 USER app
-ENV NODE_ENV=development \
-    PATH=/app/node_modules/.bin:$PATH
-ENTRYPOINT [ "next" ]
+ENV NODE_ENV=development
+ENTRYPOINT [ "npm", "run", "dev", "--" ]
 
 # Stage 3b: Build
 FROM source AS build
@@ -59,4 +58,4 @@ COPY --from=build /app/.next/static/ ./.next/static/
 
 # Run the standalone server as the unprivileged app user
 USER app
-CMD [ "node", "server.js" ]
+ENTRYPOINT [ "node", "server.js" ]
