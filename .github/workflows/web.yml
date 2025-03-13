@@ -32,7 +32,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ${{ github.workspace }}/web/.next/cache
-          key: ${{ runner.os }}-${{ runner.arch }}-nextjs-${{ hashFiles( 'web/package-lock.json') }}-${{ hashFiles('**/*.js', '**/*.jsx', '**/*.ts', '**/*.tsx') }}
+          key: ${{ runner.os }}-${{ runner.arch }}-nextjs-${{ hashFiles('web/package-lock.json') }}-${{ hashFiles('**/*.js', '**/*.jsx', '**/*.ts', '**/*.tsx') }}
           restore-keys: |
             ${{ runner.os }}-${{ runner.arch }}-nextjs-${{ hashFiles('web/package-lock.json') }}-
       - name: Run Next.js build
