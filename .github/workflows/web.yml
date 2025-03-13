@@ -53,9 +53,9 @@ jobs:
           cache: npm
           cache-dependency-path: ./web/package-lock.json
           node-version-file: ./web/.node-version
-      - name: Install Prettier
+      - name: Install dependencies
         working-directory: ./web/
-        run: npm install prettier prettier-plugin-tailwindcss
+        run: npm ci
       - name: Run Prettier
         working-directory: ./web/
         run: npx prettier -c .
