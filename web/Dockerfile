@@ -43,7 +43,7 @@ FROM source AS build
 
 # Build, assuming lint happened externally
 RUN --mount=type=cache,target=/app/.next/cache/ \
-    npx next build --no-lint
+    npm run build -- --no-lint
 
 # Stage 4: Production
 FROM base AS prod
