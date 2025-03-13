@@ -10,6 +10,12 @@ docker:
           - "**/Dockerfile"
           - "compose.yaml"
 
+dependencies:
+  - changed-files:
+      - any-glob-to-any-file:
+          - "**/uv.lock"
+          - "**/package-lock.json"
+
 github:
   - changed-files:
       - all-globs-to-any-file:
