@@ -1,22 +1,28 @@
 api:
-- changed-files:
-  - all-globs-to-any-file: 
-    - "api/**"
-    - "!api/Dockerfile"
+  - changed-files:
+      - all-globs-to-any-file:
+          - "api/**"
+          - "!api/Dockerfile"
 
-containers:
-- changed-files:
-  - any-glob-to-any-file: 
-    - "**/Dockerfile"
-    - "compose.yaml"
+docker:
+  - changed-files:
+      - any-glob-to-any-file:
+          - "**/Dockerfile"
+          - "compose.yaml"
+
+dependencies:
+  - changed-files:
+      - any-glob-to-any-file:
+          - "**/uv.lock"
+          - "**/package-lock.json"
 
 github:
-- changed-files:
-  - all-globs-to-any-file:
-    - ".github/**"
+  - changed-files:
+      - all-globs-to-any-file:
+          - ".github/**"
 
 web:
-- changed-files:
-  - all-globs-to-any-file:
-    - "web/**"
-    - "!web/Dockerfile"
+  - changed-files:
+      - all-globs-to-any-file:
+          - "web/**"
+          - "!web/Dockerfile"
