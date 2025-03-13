@@ -15,6 +15,32 @@
       },
       "args": ["app.main", "--interface=asgi"],
       "jinja": true
+    },
+    {
+      "name": "Web: Server Debug",
+      "type": "node-terminal",
+      "request": "launch",
+      "command": "npm run dev",
+      "cwd": "${workspaceFolder}/web/"
+    },
+    {
+      "name": "Web: Chrome Debug",
+      "type": "chrome",
+      "request": "launch",
+      "url": "http://localhost:8000"
+    },
+    {
+      "name": "Web: Fiefox Debug",
+      "type": "firefox",
+      "request": "launch",
+      "url": "http://localhost:8000",
+      "reAttach": true,
+      "pathMappings": [
+        {
+          "url": "webpack://_N_E",
+          "path": "${workspaceFolder}/web/"
+        }
+      ]
     }
   ]
 }

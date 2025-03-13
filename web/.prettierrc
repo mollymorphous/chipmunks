@@ -1,4 +1,4 @@
 {
   "plugins": ["prettier-plugin-tailwindcss"],
-  "tailwindStylesheet": "src/main.css"
+  "tailwindStylesheet": "./app/globals.css"
 }

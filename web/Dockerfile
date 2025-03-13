@@ -5,11 +5,20 @@ FROM docker.io/node:23.9.0-alpine@sha256:dc4d20572e425f9d4c68a6f9c382fbcfec3fa2f
 # Create an unprivileged user app:app
 RUN addgroup -S app && adduser -S app -G app
 
-WORKDIR /app/
-COPY package.json package-lock.json /app/
+# Set and expose app port, 8080 by default
+ARG CHIPMUNKS_WEB_PORT=8080
+EXPOSE ${CHIPMUNKS_WEB_PORT}
+ENV PORT=${CHIPMUNKS_WEB_PORT}
 
-# Stage 2: Build
-FROM dev AS build
+# Best practice is to always set NODE_ENV=production
+ENV NODE_ENV=production
+
+# /app/ is the root of our code in the image
+WORKDIR /app/
+
+# Stage 2: Source files and dependencies, used for build and dev
+FROM base AS source
+COPY package.json package-lock.json /app/
 
 # Install dev dependencies
 RUN --mount=type=cache,target=/root/.npm/ \
@@ -18,29 +27,35 @@ RUN --mount=type=cache,target=/root/.npm/ \
 # Copy sources
 COPY . /app/
 
-# Build distribution
-RUN --network=none npm run build
-
 # Stage 3a: Development
-FROM base AS dev
-# The app user needs to own all of /app/ for hot reload and sync to work.
-# This stage replicates some of the build stage steps as the app user to
-# reduce intermediate layers.
+FROM source AS dev
 
-RUN chown -R app:app /app/
+# The app user needs write access to /app/
+RUN chown app:app /app/
+
+# Run the development server as the unprivileged app user
 USER app
+ENV NODE_ENV=development
+ENTRYPOINT [ "npm", "run", "dev", "--" ]
 
-# Install dev dependencies
-RUN --mount=type=cache,target=/root/.npm/ \
-    npm ci --include dev
+# Stage 3b: Build
+FROM source AS build
 
-# Copy sources
-COPY --chown=app:app . /app/
+# Build, assuming lint happened externally
+RUN --mount=type=cache,target=/app/.next/cache/ \
+    npm run build -- --no-lint
 
-# Expose Vite dev server
-EXPOSE 8080
-ENTRYPOINT [ "npm", "run", "dev", "--", "--host", "--port=8080" ]
+# Stage 4: Production
+FROM base AS prod
 
-# Stage 3b: Production
-FROM docker.io/nginx:1.27.4@sha256:9d6b58feebd2dbd3c56ab5853333d627cc6e281011cfd6050fa4bcf2072c9496 AS prod
-COPY --from=build /app/dist /usr/share/nginx/html
+# Ensure telemetry is disabled in production
+ENV NEXT_TELEMETRY_DISABLED=1
+
+# Copy built standalone package and assets
+COPY --from=build /app/public/ ./public/
+COPY --from=build /app/.next/standalone/ ./ 
+COPY --from=build /app/.next/static/ ./.next/static/
+
+# Run the standalone server as the unprivileged app user
+USER app
+ENTRYPOINT [ "node", "server.js" ]
