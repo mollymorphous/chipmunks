@@ -52,6 +52,13 @@ jobs:
       - name: Sync dependencies
         working-directory: ./api/
         run: uv sync --frozen --no-dev --group mypy
+      - name: Set up mypy cache
+        uses: actions/cache@v4
+        with:
+          path: ${{ github.workspace }}/api/.mypy_cache
+          key: ${{ runner.os }}-${{ runner.arch }}-mypy-${{ hashFiles('api/uv.lock') }}-${{ hashFiles('api/app/**/*.py') }}
+          restore-keys: |
+            ${{ runner.os }}-${{ runner.arch }}-mypy-${{ hashFiles('api/uv.lock') }}-
       - name: Run mypy
         working-directory: ./api/
         run: uv run --no-sync mypy app
