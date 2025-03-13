@@ -22,10 +22,19 @@ jobs:
       - name: Set up Node
         uses: actions/setup-node@v4
         with:
-          node-version-file: "./web/.node-version"
+          cache: npm
+          cache-dependency-path: ./web/package-lock.json
+          node-version-file: ./web/.node-version
       - name: Install dependencies
         working-directory: ./web/
         run: npm ci
+      - name: Set up Next.js cache
+        uses: actions/cache@v4
+        with:
+          path: ${{ github.workspace }}/web/.next/cache
+          key: ${{ runner.os }}-nextjs-${{ hashFiles( '**/package-lock.json') }}-${{ hashFiles('**/*.js', '**/*.jsx', '**/*.ts', '**/*.tsx') }}
+          restore-keys: |
+            ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-
       - name: Run Next.js build
         working-directory: ./web/
         run: npm run build
@@ -41,7 +50,9 @@ jobs:
       - name: Set up Node
         uses: actions/setup-node@v4
         with:
-          node-version-file: "./web/.node-version"
+          cache: npm
+          cache-dependency-path: ./web/package-lock.json
+          node-version-file: ./web/.node-version
       - name: Install Prettier
         working-directory: ./web/
         run: npm install prettier prettier-plugin-tailwindcss
