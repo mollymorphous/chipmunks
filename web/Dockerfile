@@ -30,8 +30,8 @@ COPY . /app/
 # Stage 3a: Development
 FROM source AS dev
 
-# The app user needs write access to the .next dir
-RUN mkdir .next && chown app:app .next
+# The app user needs write access to /app/
+RUN chown app:app /app/
 
 # Run the development server as the unprivileged app user
 USER app

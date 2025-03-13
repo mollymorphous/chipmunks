@@ -58,8 +58,9 @@ services:
         - action: sync
           path: ./web/
           target: /app/
-        - action: rebuild
-          path: ./web/package.json
+        - action: sync+restart
+          path: ./web/next.config.ts
+          target: /app/next.config.ts
         - action: rebuild
           path: ./web/package-lock.json
 
