@@ -3,7 +3,7 @@
 # Official Python image, keep version in sync with .python-version
 FROM docker.io/python:3.13.2-alpine@sha256:323a717dc4a010fee21e3f1aac738ee10bb485de4e7593ce242b36ee48d6b352 AS python
 # Distroless uv image
-FROM ghcr.io/astral-sh/uv:0.6.5@sha256:562193a4a9d398f8aedddcb223e583da394ee735de36b5815f8f1d22cb49be15 AS uv
+FROM ghcr.io/astral-sh/uv:0.6.6@sha256:031ddbc79275e351a43cbb66f64d8cd314cc78c3878898f4ab4f147b092e8e2d AS uv
 
 # Stage 1: Build
 FROM python AS build
