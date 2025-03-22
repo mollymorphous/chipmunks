@@ -1,6 +1,6 @@
 # Stage 1: Base
 # Official Node image, keep version in sync with .node-version
-FROM docker.io/node:23.10.0-alpine@sha256:51fde04fde1407db896ca089ba363d6fc1dc7cf242af581d471a9ff02cd715e3 AS base
+FROM docker.io/node:23.10.0-alpine@sha256:6eae672406a2bc8ed93eab6f9f76a02eb247e06ba82b2f5032c0a4ae07e825ba AS base
 
 # Create an unprivileged user app:app
 RUN addgroup -S app && adduser -S app -G app
