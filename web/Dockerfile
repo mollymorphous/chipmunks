@@ -51,6 +51,9 @@ FROM base AS prod
 # Ensure telemetry is disabled in production
 ENV NEXT_TELEMETRY_DISABLED=1
 
+# Copy license file
+COPY LICENSE.txt /app/
+
 # Copy built standalone package and assets
 COPY --from=build /app/public/ ./public/
 COPY --from=build /app/.next/standalone/ ./ 

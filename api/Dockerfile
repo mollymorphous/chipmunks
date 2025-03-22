@@ -19,7 +19,7 @@ RUN --mount=type=cache,target=/root/.cache/uv \
     uv sync --frozen --no-install-project --no-dev
 
 # Add source files to the image and run uv sync to compile bytecode
-COPY ./app/ /app/app/
+COPY --exclude=tests . /app/
 RUN --mount=type=cache,target=/root/.cache/uv \
     --network=none \
     uv sync --frozen --no-dev
