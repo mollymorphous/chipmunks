@@ -1,0 +1,14 @@
+// SPDX-FileCopyrightText: NONE
+// SPDX-License-Identifier: CC0-1.0
+{
+    "recommendations": [
+        "bierner.emojisense",
+        "bierner.markdown-emoji",
+        "charliermarsh.ruff",
+        "ms-python.python",
+        "redhat.vscode-yaml",
+        "streetsidesoftware.code-spell-checker",
+        "tombi-toml.tombi",
+        "ymotongpoo.licenser"
+    ]
+}

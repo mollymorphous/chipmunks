@@ -1,0 +1,11 @@
+version = 1
+
+# Tool config files are uncopyrightable and released to the public domain
+[[annotations]]
+path = [
+    ".devcontainer/*",
+    ".github/*",
+    ".vscode/*"
+]
+SPDX-FileCopyrightText = "NONE"
+SPDX-License-Identifier = "CC0-1.0"

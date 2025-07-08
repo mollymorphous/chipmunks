@@ -1,0 +1,23 @@
+# SPDX-FileCopyrightText: NONE
+# SPDX-License-Identifier: CC0-1.0
+
+# Local env files
+.env*.local
+
+# App data directory
+/data
+
+# SQLite databases
+*.db
+*.sqlite
+*.sqlite3
+
+# Python
+__pycache__
+*.py[cod]
+.?venv
+.*_cache
+
+# OS files
+.DS_Store
+Thumbs.db
