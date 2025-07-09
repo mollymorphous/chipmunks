@@ -1,8 +1,39 @@
 // SPDX-FileCopyrightText: NONE
 // SPDX-License-Identifier: CC0-1.0
 {
+    "[python]": {
+        "editor.formatOnSave": true,
+        "editor.codeActionsOnSave": {
+            "source.fixAll": "explicit",
+            "source.organizeImports": "explicit"
+        },
+        "editor.defaultFormatter": "charliermarsh.ruff"
+    },
+    "[toml]": {
+        "editor.formatOnSave": true,
+        "editor.defaultFormatter": "tombi-toml.tombi"
+    },
     "licenser.license": "Custom",
+    // REUSE-IgnoreStart
     "licenser.customHeader": "SPDX-FileCopyrightText: © @YEAR@ @AUTHOR@\nSPDX-License-Identifier: AGPL-3.0-or-later",
+    // REUSE-IgnoreEnd
     "licenser.customSPDXId": "AGPL-3.0-or-later",
-    "licenser.useSingleLineStyle": true
+    "licenser.useSingleLineStyle": true,
+    "cSpell.words": [
+        "asgi",
+        "devcontainer",
+        "devcontainers",
+        "dotenv",
+        "fastapi",
+        "granian",
+        "mypy",
+        "orjson",
+        "pname",
+        "pydantic",
+        "sqlalchemy",
+        "sqlmodel",
+        "starlette",
+        "tombi",
+        "uvloop"
+    ]
 }

@@ -1,0 +1,41 @@
+# SPDX-FileCopyrightText: © 2025 Molly Rose <molly@mollymorphous.dev>
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+[project]
+name = "chipmunks"
+version = "0.0.0"
+description = "Cute little inventory manager for groceries and household supplies"
+readme = "README.md"
+requires-python = ">=3.13"
+license = "AGPL-3.0-or-later"
+license-files = ["COPYING.md"]
+authors = [
+  { name = "Molly Rose", email = "molly@mollymorphous.dev" },
+]
+scripts = { chipmunks = "chipmunks.cli:run" }
+dependencies = [
+  "chipmunks-api",
+  "granian[pname,uvloop]>=2.4.1",
+  "starlette>=0.40.0,<0.47.0",
+]
+
+[dependency-groups]
+dev = [
+  "granian[reload]",
+  "mypy==1.16.1",
+  "reuse>=5.0.2",
+  "ruff==0.12.2",
+  "tombi>=0.4.24",
+]
+
+[build-system]
+requires = ["uv_build>=0.7.19,<0.8"]
+build-backend = "uv_build"
+
+[tool.uv.workspace]
+members = [
+  "api",
+]
+
+[tool.uv.sources]
+chipmunks-api = { workspace = true }

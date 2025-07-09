@@ -1,0 +1,39 @@
+// SPDX-FileCopyrightText: NONE
+// SPDX-License-Identifier: CC0-1.0
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Chipmunks",
+            "type": "debugpy",
+            "request": "launch",
+            "module": "granian",
+            "args": [
+                "chipmunks",
+                "--access-log",
+                "--interface=asgi",
+                "--reload",
+                "--reload-paths=${workspaceFolder}/api/src",
+                "--reload-paths=${workspaceFolder}/src",
+                "--reload-ignore-worker-failure"
+            ]
+        },
+        {
+            "name": "API",
+            "type": "debugpy",
+            "request": "launch",
+            "module": "granian",
+            "args": [
+                "chipmunks_api",
+                "--access-log",
+                "--interface=asgi",
+                "--reload",
+                "--reload-paths=${workspaceFolder}/api/src",
+                "--reload-ignore-worker-failure"
+            ],
+        }
+    ]
+}

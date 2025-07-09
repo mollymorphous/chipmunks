@@ -1,11 +1,12 @@
 version = 1
 
-# Tool config files are uncopyrightable and released to the public domain
+# Lock files are generated, and therefore uncopyrightable, but cannot be
+# commented and for the avoidance of doubt are released to the public domain
 [[annotations]]
 path = [
-    ".devcontainer/*",
-    ".github/*",
-    ".vscode/*"
+  ".devcontainer/devcontainer-lock.json",
+  ".python-version",
+  "uv.lock",
 ]
 SPDX-FileCopyrightText = "NONE"
 SPDX-License-Identifier = "CC0-1.0"

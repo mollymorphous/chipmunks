@@ -5,12 +5,12 @@
 
 :chipmunk: Cute little inventory manager for groceries and household supplies
 
-Chipmunks is a private, self-hosted web app to make managing your fridge, 
+Chipmunks is a private, self-hosted web app to make managing your fridge,
 pantry, or supply closet easy. It's currently in early development, but when
 complete will include features like:
 
 - Stock levels and predictive inventory: Set a desired amount of a thing,
-  and Chipmunks will track your usage and let you know when it's time to 
+  and Chipmunks will track your usage and let you know when it's time to
   resupply.
 - Shopping lists: Build shopping lists for different trips or stores together
   with your household and print them out or check things off on your phone.
@@ -25,17 +25,19 @@ subtribe _Tamiina_ which are famous for stockpiling food in their burrows.
 
 # License
 
-[[AGPL-3.0-or-later](COPYING.md)] Copyright © 2025 Molly Rose.
+Copyright © 2025 Molly Rose.
 
 This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU Affero General Public License as published by
+it under the terms of the [GNU Affero General Public License][] as published by
 the Free Software Foundation, either version 3 of the License, or
 (at your option) any later version.
 
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-GNU Affero General Public License for more details.
+[GNU Affero General Public License][] for more details.
 
-You should have received a copy of the GNU Affero General Public License
+You should have received a copy of the [GNU Affero General Public License][]
 along with this program. If not, see <https://www.gnu.org/licenses/>.
+
+[GNU Affero General Public License]: COPYING.md

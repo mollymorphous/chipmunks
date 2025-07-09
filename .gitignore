@@ -6,16 +6,21 @@
 
 # App data directory
 /data
+/api/data
 
 # SQLite databases
 *.db
 *.sqlite
 *.sqlite3
 
+# Built Python and Node packages
+dist
+
 # Python
 __pycache__
 *.py[cod]
-.?venv
+.venv
+venv
 .*_cache
 
 # OS files
