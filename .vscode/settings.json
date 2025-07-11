@@ -20,6 +20,7 @@
     "licenser.customSPDXId": "AGPL-3.0-or-later",
     "licenser.useSingleLineStyle": true,
     "cSpell.words": [
+        "aiosqlite",
         "asgi",
         "devcontainer",
         "devcontainers",
