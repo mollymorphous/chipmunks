@@ -1,0 +1,32 @@
+# SPDX-FileCopyrightText: © 2025 Molly Rose <molly@mollymorphous.dev>
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+# Local env files
+.env*.local
+
+# SQLite databases
+*.db
+*.sqlite
+*.sqlite3
+
+# Built Python and Node packages
+dist
+
+# Python
+__pycache__
+*.py[cod]
+.venv
+venv
+.*_cache
+
+# Node
+node_modules
+npm-debug.log*
+*.config.js.timestamp-*
+*.config.ts.timestamp-*
+.npm
+.vite
+
+# OS files
+.DS_Store
+Thumbs.db
