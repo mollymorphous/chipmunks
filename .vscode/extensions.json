@@ -1,0 +1,14 @@
+// SPDX-FileCopyrightText: © 2025 Molly Rose <molly@mollymorphous.dev>
+// SPDX-License-Identifier: AGPL-3.0-or-later
+
+{
+    "recommendations": [
+        "bierner.emojisense",
+        "bierner.markdown-emoji",
+        "charliermarsh.ruff",
+        "ms-python.python",
+        "redhat.vscode-yaml",
+        "tamasfe.even-better-toml",
+        "ymotongpoo.licenser",
+    ]
+}

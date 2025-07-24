@@ -1,0 +1,24 @@
+// SPDX-FileCopyrightText: © 2025 Molly Rose <molly@mollymorphous.dev>
+// SPDX-License-Identifier: AGPL-3.0-or-later
+
+{
+    "[python]": {
+        "editor.formatOnSave": true,
+        "editor.codeActionsOnSave": {
+            "source.fixAll": "explicit",
+            "source.organizeImports": "explicit",
+        },
+        "editor.defaultFormatter": "charliermarsh.ruff"
+    },
+    "[toml]": {
+        "editor.formatOnSave": true,
+        "editor.defaultFormatter": "tamasfe.even-better-toml",
+    },
+    "evenBetterToml.taplo.configFile.path": "taplo.toml",
+    "licenser.license": "Custom",
+    // REUSE-IgnoreStart
+    "licenser.customHeader": "SPDX-FileCopyrightText: © @YEAR@ @AUTHOR@\nSPDX-License-Identifier: AGPL-3.0-or-later",
+    // REUSE-IgnoreEnd
+    "licenser.customSPDXId": "AGPL-3.0-or-later",
+    "licenser.useSingleLineStyle": true,
+}

@@ -1,0 +1,7 @@
+# SPDX-FileCopyrightText: © 2025 Molly Rose <molly@mollymorphous.dev>
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+[formatting]
+array_auto_collapse = false
+indent_string = "    "
+reorder_keys = true
