@@ -1,0 +1,10 @@
+version = 1
+
+[[annotations]]
+path = [
+    "requirements.txt",
+    "uv.lock",
+    ".python-version",
+]
+SPDX-FileCopyrightText = "NONE"
+SPDX-License-Identifier = "CC0-1.0"

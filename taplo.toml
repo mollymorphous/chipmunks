@@ -4,4 +4,10 @@
 [formatting]
 array_auto_collapse = false
 indent_string = "    "
-reorder_keys = true
+
+[[rule]]
+include = ["**/pyproject.toml"]
+keys = ["project"]
+
+[rule.formatting]
+reorder_arrays = true
