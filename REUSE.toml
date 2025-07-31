@@ -1,5 +1,6 @@
 version = 1
 
+# Generated version lock files
 [[annotations]]
 path = [
     "requirements.txt",
@@ -8,3 +9,9 @@ path = [
 ]
 SPDX-FileCopyrightText = "NONE"
 SPDX-License-Identifier = "CC0-1.0"
+
+# Empty Python marker files
+[[annotations]]
+path = ["**/py.typed", "**/__init__.py"]
+SPDX-FileCopyrightText = "© 2025 Molly Rose <molly@mollymorphous.dev>"
+SPDX-License-Identifier = "AGPL-3.0-or-later"

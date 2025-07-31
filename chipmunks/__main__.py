@@ -1,6 +1,7 @@
 # SPDX-FileCopyrightText: © 2025 Molly Rose <molly@mollymorphous.dev>
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
-from .__about__ import __version__
+from .cli import run_cli
 
-__all__ = ["__version__"]
+if __name__ == "__main__":
+    run_cli()
