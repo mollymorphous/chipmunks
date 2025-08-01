@@ -8,6 +8,6 @@ from litestar.cli import litestar_group
 
 def run_cli():
     """Run chipmunks CLI (which wraps Litestar CLI)"""
-    os.environ["LITESTAR_APP"] = "chipmunks.asgi:create_app"
+    os.environ["LITESTAR_APP"] = "chipmunks.app:create_app"
     os.environ["LITESTAR_APP_NAME"] = "Chipmunks"
     litestar_group()

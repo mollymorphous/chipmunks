@@ -5,8 +5,6 @@ from typing import TYPE_CHECKING
 
 from litestar import get
 
-from .app.plugin import ChipmunksPlugin
-
 if TYPE_CHECKING:
     from litestar import Litestar
 
@@ -19,4 +17,6 @@ async def hello() -> str:
 def create_app() -> "Litestar":
     from litestar import Litestar
 
-    return Litestar(route_handlers=[hello], plugins=[ChipmunksPlugin()])
+    from . import config
+
+    return Litestar(route_handlers=[hello], openapi_config=config.openapi)

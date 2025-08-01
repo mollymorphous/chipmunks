@@ -3,7 +3,7 @@
 
 from litestar.openapi import OpenAPIConfig
 
-from .. import __version__
+from . import __version__
 
 openapi = OpenAPIConfig(
     title="Chimunks",
